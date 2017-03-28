@@ -6,6 +6,10 @@
 package beans;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import persistence.Band;
 
 /**
  *
@@ -13,7 +17,19 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class JukeboxBean {
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    @PersistenceUnit EntityManagerFactory emf;
+    
+    public boolean insertBand(Band p){
+        EntityManager em = emf.createEntityManager();
+        Band band = em.find(Band.class, p.getBandName());
+        if (band == null ){
+            em.persist(p);
+            em.flush();
+            em.close();
+            return true;
+        }
+        else return false;
+    }
+    
 }

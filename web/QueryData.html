@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <form action ="GroupByName" method = "POST" name = "">
+            <input type ="text" name ="groupName" required>
+            Browse group by name: <input type ="submit" value = "Search" name ="getGroupByName">
+        </form>
+        
+        <form action ="GroupByYear" method = "POST" name = "">
+            <input type ="number" name ="groupYear" required>
+            Browse group by year <input type ="submit" value = "Search" name ="getGroupByYear">
+        </form>
+        
+               
+        <form action ="SongByName" method = "POST" name = "">
+            <input type ="text" name ="songName" required>
+            Browse song by name: <input type ="submit" value = "Search" name ="getSongByName">
+        </form>
+        
+        <form action ="SongsByAlbum" method = "POST" name = "">
+            <input type ="text" name ="songAlbum" required>
+            Browse songs by album: <input type ="submit" value = "Search" name ="getSongByAlbum">
+        </form>
+        
+        <form action ="SongsByLength" method = "POST" name = "">
+            <input type ="number" name ="songLength1" required>
+            <input type ="number" name ="songLength2" required>
+            Browse songs by length: <input type ="submit" value = "Search" name ="getSongByLength">
+        </form>
+        
+        <form action ="AlbumsByYear" method = "POST" name = "">
+            <input type ="number" name ="albumYear" required>
+            Browse albums by year: <input type ="submit" value = "Search" name ="getAlbumByYear">
+        </form>
+        
+        <form action ="AlbumsByName" method = "POST" name = "">
+            <input type ="text" name ="albumName" required>
+            Browse albums by name: <input type ="submit" value = "Search" name ="getAlbumByName">
+        </form>
+        
+        <form action ="AlbumsByGroup" method = "POST" name = "">
+            <input type ="text" name ="albumGroup" required>
+            Browse albums by group: <input type ="submit" value = "Search" name ="getAlbumByGroup">
+        </form>
+        
+        <form action ="AlbumsByGroup" method = "POST" name = "">
+            <input type ="text" name ="albumGroup" required>
+            Browse albums by group: <input type ="submit" value = "Search" name ="getAlbumByGroup">
+        </form>
+        
+        <form action ="AlbumsByGenre" method = "POST" name = "">
+            <input type ="text" name ="albumGenre" required>
+            Browse albums by genre <input type ="submit" value = "Search" name ="getAlbumByGenre">
+        </form>
+        
+        <form action ="GroupsByGenre" method = "POST" name = "">
+            <input type ="text" name ="groupGenre" required>
+            Browse groups by genre: <input type ="submit" value = "Search" name ="getGroupByGenre">
+        </form>
+        
+        <form action ="BandsByRanking" method = "POST" name = "">
+            Bands ranking: <input type ="submit" value = "Search" name ="getBandsByRanking">
+        </form>
+        
+        <form action ="AlbumsByRanking" method = "POST" name = "">
+            Albums ranking: <input type ="submit" value = "Search" name ="getAlbumsByRanking">
+        </form>
+        
+        <form action ="SongsByRanking" method = "POST" name = "">
+            Songs ranking: <input type ="submit" value = "Search" name ="getSongsByRanking">
+        </form>
+        
+    </body>
+</html>
