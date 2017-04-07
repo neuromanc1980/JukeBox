@@ -15,59 +15,36 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistence.Album;
 import persistence.Band;
 
 /**
  *
  * @author xaviB
  */
-@WebServlet(name = "InsertAlbum", urlPatterns = {"/InsertAlbum"})
-public class InsertAlbum extends HttpServlet {
-    @EJB
-    JukeboxBean miEjb;
-    
-    public static final String STATUS_OK = "Insert Error";
-    public static final String STATUS_ERROR ="Insert successful";
+@WebServlet(name = "AllBands", urlPatterns = {"/AllBands"})
+public class AllBands extends HttpServlet {
 
+     @EJB
+     JukeboxBean miEjb; 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-
-            if ("alta".equals(request.getParameter("alta"))) {
-                out.println("Entra");
-                String name = request.getParameter("name");
-                String genre = request.getParameter("genre");
-                String band = request.getParameter("band");
-                String discography = request.getParameter("discography");
-                int year = Integer.parseInt(request.getParameter("year"));
-                
-                System.out.println(year);
-                
-                Album b = new Album(name, genre, discography, year);
-                b.setBand(miEjb.getBandByName(band));
-                if (b.getYear()<=year){
-                    
-                    
-                if (miEjb.insertAlbum(b, band).equals("ok")){
-                    request.setAttribute("status", "Group didn't exist yet");
-                } else {
-                    request.setAttribute("status", "Album inserted successfully");
-                    miEjb.insertAlbum(b, band);
-                    }
-                } else {
-                    request.setAttribute("status", "Can't belong to this band");
-                    }
-                    
-                request.getRequestDispatcher("/end.jsp").forward(request, response);               
-            } 
-            
-            
-            
-                       
-          
-        }
+        
+        List<Band> bands = miEjb.SelectAllBands();
+        System.out.println("ENTRA================");
+        System.out.println(bands);
+        request.setAttribute("bands", bands);
+        request.getRequestDispatcher("/InsertAlbum.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

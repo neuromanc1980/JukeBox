@@ -21,18 +21,9 @@
     <body>
         <h1>Insert Album</h1>
         
-        <%            
-            List <Band> Bands = (List<Band>) request.getAttribute("band");
-            //List<Band> bands  = miEjb.SelectAllBands();
+       
 
-            for (Band t : Bands) {%>
-                    <option value="<% t.getBandName(); %>">
-                        <% t.getBandName();
-                        %></option>
-                <% } %>
-            </select>   
-        
-            <form  method="POST">
+        <form  method="POST" action="InsertAlbum">
             <br>Name: <input type="text" name="name" required>
             
             <br>Genre: <select name="genre" required>
@@ -46,17 +37,27 @@
             <option value="House">House</option>
             </select>
             
-            Band: <select name="band" required>"
+            Band: <select name="band" required>
                 
-            <br>Discography: <input type="text" name="discography" required>"
-             <br>"
-            <br>Year: <input type="number" name="year" required>"
-             <br>"
-            <input type="submit" name = "alta" value="alta">"
-            <br></form> <br>"
+               
+            <%  
+                List<Band> bands = (List<Band>) request.getAttribute("bands");
+
+                for (Band t : bands) {
+                        out.println("<option value=\""+ t.getBandName()+"\">"+t.getBandName()+"</option>");
+                    }
+            %>
+                </select>
+                
+            <br>Discography: <input type="text" name="discography" required>
+             <br>
+            <br>Year: <input type="number" name="year" required>
+             <br>
+            <input type="submit" name = "alta" value="alta">
+            <br></form> <br>
             
             
-            <br><a href="InsertData.html">Volver</a>"
+            <br><a href="InsertData.html">Volver</a>
         
     </body>
 </html>
