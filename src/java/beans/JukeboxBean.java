@@ -5,10 +5,13 @@
  */
 package beans;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+import persistence.Album;
 import persistence.Band;
 
 /**
@@ -31,5 +34,34 @@ public class JukeboxBean {
         }
         else return false;
     }
+    public List<Band> SelectAllBands(){
+      EntityManager em = emf.createEntityManager();
+      List<Band> resultado = em.createNamedQuery("Band.findAll").getResultList();
+      return resultado;
+  }
+    public String insertAlbum(Album p, String b){
+        System.out.println("Enta1");
+        EntityManager em = emf.createEntityManager();
+        Album album = em.find(Album.class, p.getAlbumName());
+        if (album == null ){
+            System.out.println("Enta2");
+            em.persist(p);
+            em.flush();
+            em.close();
+            return "ok";
+        }
+        else return "Album already exists";
+    }
+    public Band getBandByName(String name){
+      EntityManager em = emf.createEntityManager();
+      Query q = em.createNamedQuery("Band.findByBandName");
+      q.setParameter("bandName", name);
+      Band t = (Band) q.getSingleResult();    
+      return t;
+      
+  } 
+    
+    
+    
     
 }
