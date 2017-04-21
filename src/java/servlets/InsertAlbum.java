@@ -36,7 +36,6 @@ public class InsertAlbum extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             if ("alta".equals(request.getParameter("alta"))) {
-                out.println("Entra");
                 String name = request.getParameter("name");
                 String genre = request.getParameter("genre");
                 String band = request.getParameter("band");

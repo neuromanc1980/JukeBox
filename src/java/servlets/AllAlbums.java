@@ -8,21 +8,22 @@ package servlets;
 import beans.JukeboxBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import persistence.Album;
 import persistence.Band;
 
 /**
  *
  * @author xaviB
  */
-public class InsertBand extends HttpServlet {
-    
-    @EJB
-    JukeboxBean miEjb;
+@WebServlet(name = "AllAlbums", urlPatterns = {"/AllAlbums"})
+public class AllAlbums extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,27 +34,16 @@ public class InsertBand extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+      @EJB
+     JukeboxBean miEjb; 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
-            // Miramos si han pulsado el submit
-            if ("alta".equals(request.getParameter("alta"))) {
-                String name = request.getParameter("name");
-                String genre = request.getParameter("genre");
-                String country = request.getParameter("country");
-                int year = Integer.parseInt(request.getParameter("year"));
-                
-                Band b = new Band(name, year, genre, country);
-                
-                if (miEjb.insertBand(b)){
-                    request.setAttribute("status", "Band created succesfully");
-                    
-                }   else { request.setAttribute("status", "Error in band creation");}
-                request.getRequestDispatcher("/end.jsp").forward(request, response);  
-            } 
-            
+        try (PrintWriter out = response.getWriter()) {     
+        List<Album> albums = miEjb.SelectAllAlbums();
+        System.out.println(albums);
+        request.setAttribute("albums", albums);
+        request.getRequestDispatcher("/InsertSong.jsp").forward(request, response);
         }
     }
 

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : end
-    Created on : 07-abr-2017, 20:13:03
+    Document   : BandsByName
+    Created on : 21-abr-2017, 20:10:36
     Author     : xaviB
 --%>
 
@@ -12,11 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>
-            <% 
-                out.println(request.getAttribute("status"));
-            %>
-        </h1>
-        <br><a href="InsertData.html">Volver</a>
+        
     </body>
 </html>

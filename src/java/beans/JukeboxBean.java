@@ -13,6 +13,7 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import persistence.Album;
 import persistence.Band;
+import persistence.Song;
 
 /**
  *
@@ -34,9 +35,25 @@ public class JukeboxBean {
         }
         else return false;
     }
+    public boolean insertSong(Song p){
+        EntityManager em = emf.createEntityManager();
+        Song song = em.find(Song.class, p.getSongName());
+        if (song == null ){
+            em.persist(p);
+            em.flush();
+            em.close();
+            return true;
+        }
+        else return false;
+    }
     public List<Band> SelectAllBands(){
       EntityManager em = emf.createEntityManager();
       List<Band> resultado = em.createNamedQuery("Band.findAll").getResultList();
+      return resultado;
+  }
+    public List<Album> SelectAllAlbums(){
+      EntityManager em = emf.createEntityManager();
+      List<Album> resultado = em.createQuery("select a from Album a order by a.band.bandName").getResultList();
       return resultado;
   }
     public String insertAlbum(Album p, String b){
@@ -59,7 +76,15 @@ public class JukeboxBean {
       Band t = (Band) q.getSingleResult();    
       return t;
       
-  } 
+  }
+    public Album getAlbumByName(String name){
+      EntityManager em = emf.createEntityManager();
+      Query q = em.createNamedQuery("Album.findByAlbumName");
+      q.setParameter("albumName", name);
+      Album t = (Album) q.getSingleResult();    
+      return t;
+      
+  }
     
     
     

@@ -148,7 +148,7 @@ public class Band implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.Band[ bandName=" + bandName + " ]";
+        return bandName;
     }
     
 }
