@@ -69,14 +69,34 @@ public class JukeboxBean {
         }
         else return "Album already exists";
     }
+    
     public Band getBandByName(String name){
       EntityManager em = emf.createEntityManager();
       Query q = em.createNamedQuery("Band.findByBandName");
       q.setParameter("bandName", name);
       Band t = (Band) q.getSingleResult();    
+      return t;      
+  }
+    
+      public List<Band> getBandsByName(String name){
+      EntityManager em = emf.createEntityManager();
+      Query q = em.createQuery("select b from Band b where b.bandName like :bandName");
+      q.setParameter("bandName", "%"+name+"%");
+      List<Band> t = q.getResultList();
       return t;
       
   }
+    
+      public List<Band> getBandsByYear(int year){
+          
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createQuery("select b from Band b where b.year like :year");
+        q.setParameter("year", year);
+        List<Band> t = q.getResultList();
+        return t;
+        //seguimos aqui
+      }
+      
     public Album getAlbumByName(String name){
       EntityManager em = emf.createEntityManager();
       Query q = em.createNamedQuery("Album.findByAlbumName");

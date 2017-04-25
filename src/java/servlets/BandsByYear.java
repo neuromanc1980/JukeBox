@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,29 +20,25 @@ import persistence.Band;
  *
  * @author xaviB
  */
-@WebServlet(name = "BandByName", urlPatterns = {"/BandByName"})
-public class BandByName extends HttpServlet {
-    
+public class BandsByYear extends HttpServlet {
+
+   
     @EJB
     JukeboxBean miEjb;
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            
             throws ServletException, IOException {
-         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            System.out.println("Entra1");
-            if ("Search".equals(request.getParameter("getGroupByName"))) {
-                System.out.println("Entra2");
-           String name = request.getParameter("groupName");
-           System.out.println(name);
-           List<Band> b = miEjb.getBandsByName(name);
-           System.out.println(b);
-           request.setAttribute("bands", b);
-           //JSP aún por crear
-           request.getRequestDispatcher("/BandsByName.jsp").forward(request, response);   
+            
+            if ("Search".equals(request.getParameter("getGroupByYear"))){
+                
+                int year = Integer.parseInt(request.getParameter("groupYear"));
+                
+                List<Band> b = miEjb.getBandsByYear(year);
             }
+            
+            
         }
     }
 

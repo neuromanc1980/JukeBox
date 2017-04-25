@@ -4,9 +4,17 @@
         <servlet-name>InsertBand</servlet-name>
         <servlet-class>servlets.InsertBand</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BandsByYear</servlet-name>
+        <servlet-class>servlets.BandsByYear</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InsertBand</servlet-name>
         <url-pattern>/InsertBand</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BandsByYear</servlet-name>
+        <url-pattern>/BandsByYear</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
