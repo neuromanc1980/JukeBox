@@ -35,6 +35,6 @@
             <br></form> <br>
             
             
-            <br><a href="InsertData.html">Volver</a>
+            <br><a href="index.html">Volver</a>
     </body>
 </html>

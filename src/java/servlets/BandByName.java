@@ -37,9 +37,7 @@ public class BandByName extends HttpServlet {
             if ("Search".equals(request.getParameter("getGroupByName"))) {
                 System.out.println("Entra2");
            String name = request.getParameter("groupName");
-           System.out.println(name);
            List<Band> b = miEjb.getBandsByName(name);
-           System.out.println(b);
            request.setAttribute("bands", b);
            //JSP aún por crear
            request.getRequestDispatcher("/BandsByName.jsp").forward(request, response);   

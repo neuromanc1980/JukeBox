@@ -24,11 +24,12 @@ import persistence.Band;
  */
 @WebServlet(name = "InsertAlbum", urlPatterns = {"/InsertAlbum"})
 public class InsertAlbum extends HttpServlet {
+
     @EJB
     JukeboxBean miEjb;
-    
+
     public static final String STATUS_OK = "Insert Error";
-    public static final String STATUS_ERROR ="Insert successful";
+    public static final String STATUS_ERROR = "Insert successful";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,31 +42,25 @@ public class InsertAlbum extends HttpServlet {
                 String band = request.getParameter("band");
                 String discography = request.getParameter("discography");
                 int year = Integer.parseInt(request.getParameter("year"));
-                
-                System.out.println(year);
-                
+
                 Album b = new Album(name, genre, discography, year);
+                Band c = miEjb.getBandByName(band);
                 b.setBand(miEjb.getBandByName(band));
-                if (b.getYear()<=year){
-                    
-                    
-                if (miEjb.insertAlbum(b, band).equals("ok")){
-                    request.setAttribute("status", "Group didn't exist yet");
-                } else {
-                    request.setAttribute("status", "Album inserted successfully");
-                    miEjb.insertAlbum(b, band);
+                if (c.getYear() <= year) {
+
+                    if (miEjb.insertAlbum(b, band).equals("ok")) {
+                        request.setAttribute("status", "Album inserted successfully");
+                    } else {
+                        request.setAttribute("status", "Album already exists");
                     }
+
                 } else {
-                    request.setAttribute("status", "Can't belong to this band");
-                    }
-                    
-                request.getRequestDispatcher("/end.jsp").forward(request, response);               
-            } 
-            
-            
-            
-                       
-          
+                    request.setAttribute("status", "The band didn't exist yet");
+                }
+
+                request.getRequestDispatcher("/end.jsp").forward(request, response);
+            }
+
         }
     }
 

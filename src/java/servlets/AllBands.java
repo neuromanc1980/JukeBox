@@ -38,12 +38,24 @@ public class AllBands extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        List<Band> bands = miEjb.SelectAllBands();
+       
+        if ("Register Album".equals(request.getParameter("insertAlbum"))) {
+            List<Band> bands = miEjb.SelectAllBands();
         System.out.println("ENTRA================");
         System.out.println(bands);
         request.setAttribute("bands", bands);
         request.getRequestDispatcher("/InsertAlbum.jsp").forward(request, response);
+               
+            }
+       if ("Register Musician".equals(request.getParameter("insertMusician"))) {
+            List<Band> bands = miEjb.SelectAllBands();
+        System.out.println("ENTRA2================");
+        System.out.println(bands);
+        request.setAttribute("bands", bands);
+        request.getRequestDispatcher("/InsertMusician.jsp").forward(request, response);
+               
+            }
+       
         
     }
 

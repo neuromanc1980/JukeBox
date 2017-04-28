@@ -6,7 +6,6 @@
 package persistence;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -52,8 +49,7 @@ public class Musician implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "BirthDate")
-    @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    private int birthDate;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -70,7 +66,7 @@ public class Musician implements Serializable {
         this.musicianName = musicianName;
     }
 
-    public Musician(String musicianName, String role, Date birthDate, String birthPlace) {
+    public Musician(String musicianName, String role, int birthDate, String birthPlace) {
         this.musicianName = musicianName;
         this.role = role;
         this.birthDate = birthDate;
@@ -93,11 +89,11 @@ public class Musician implements Serializable {
         this.role = role;
     }
 
-    public Date getBirthDate() {
+    public int getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(int birthDate) {
         this.birthDate = birthDate;
     }
 

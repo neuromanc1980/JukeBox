@@ -13,6 +13,7 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import persistence.Album;
 import persistence.Band;
+import persistence.Musician;
 import persistence.Song;
 
 /**
@@ -69,6 +70,19 @@ public class JukeboxBean {
         }
         else return "Album already exists";
     }
+    public String insertMusician(Musician p, String b){
+        System.out.println("Enta1");
+        EntityManager em = emf.createEntityManager();
+        Musician m = em.find(Musician.class, p.getMusicianName());
+        if (m == null ){
+            System.out.println("Enta2");
+            em.persist(p);
+            em.flush();
+            em.close();
+            return "ok";
+        }
+        else return "Musician already exists";
+    }
     
     public Band getBandByName(String name){
       EntityManager em = emf.createEntityManager();
@@ -88,13 +102,11 @@ public class JukeboxBean {
   }
     
       public List<Band> getBandsByYear(int year){
-          
         EntityManager em = emf.createEntityManager();
         Query q = em.createQuery("select b from Band b where b.year like :year");
         q.setParameter("year", year);
         List<Band> t = q.getResultList();
         return t;
-        //seguimos aqui
       }
       
     public Album getAlbumByName(String name){

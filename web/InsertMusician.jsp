@@ -23,18 +23,17 @@
         
        
 
-        <form  method="POST" action="InsertAlbum">
+        <form  method="POST" action="InsertMusician">
             <br>Name: <input type="text" name="name" required>
             
-            <br>Genre: <select name="genre" required>
-            <option value="Rock">Rock</option>"          
-            <option value="Metal">Metal</option>         
-            <option value="Jazz">Jazz</option>
-            <option value="HipHop">HipHop</option>
-            <option value="Classic">Classic</option>          
-            <option value="Pop">Pop</option>          
-            <option value="Techno">Techno</option>           
-            <option value="House">House</option>
+            <br>Role: <select name="role" required>
+            <option value="Guitarrist">Guitarrist</option>"          
+            <option value="Bass">Bass</option>         
+            <option value="Drummer">Drummer</option>
+            <option value="Singer">Singer</option>
+            <option value="Keyboard">Keyboard</option>  
+            <option value="Violinist">Violinist</option> 
+            <option value="Tambourinist">Tambourinist</option> 
             </select>
             
             Band: <select name="band" required>
@@ -49,9 +48,9 @@
             %>
                 </select>
                 
-            <br>Discography: <input type="text" name="discography" required>
+            <br>Birth year: <input type="number" name="birthdate" min="1000" required>
              <br>
-            <br>Year: <input type="number" name="year" min="1000" required>
+            <br>Birthplace: <input type="text" name="birthplace" required>
              <br>
             <input type="submit" name = "alta" value="alta">
             <br></form> <br>

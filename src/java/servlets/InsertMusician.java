@@ -8,39 +8,53 @@ package servlets;
 import beans.JukeboxBean;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.Band;
+import persistence.Musician;
 
 /**
  *
  * @author xaviB
  */
-public class BandsByYear extends HttpServlet {
+@WebServlet(name = "InsertMusician", urlPatterns = {"/InsertMusician"})
+public class InsertMusician extends HttpServlet {
 
-   
     @EJB
     JukeboxBean miEjb;
-    
+
+    public static final String STATUS_OK = "Insert Error";
+    public static final String STATUS_ERROR = "Insert successful";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            if ("Search".equals(request.getParameter("getGroupByYear"))){
-                
-                int year = Integer.parseInt(request.getParameter("groupYear"));
-                List<Band> b = miEjb.getBandsByYear(year);
-                request.setAttribute("bands", b);
-                request.getRequestDispatcher("/BandsByYear.jsp").forward(request, response);  
-                
+
+            if ("alta".equals(request.getParameter("alta"))) {
+                String name = request.getParameter("name");
+                String role = request.getParameter("role");
+                String band = request.getParameter("band");
+                String birthplace = request.getParameter("birthplace");
+                int year = Integer.parseInt(request.getParameter("birthdate"));
+
+                Musician b = new Musician(name, role, year, birthplace);
+                Band c = miEjb.getBandByName(band);
+                b.setBand(miEjb.getBandByName(band));
+
+                    if (miEjb.insertMusician(b, band).equals("ok")) {
+                        request.setAttribute("status", "Musician inserted successfully");
+                    } else {
+                        request.setAttribute("status", "Musician already exists");
+                    }
+
+                request.getRequestDispatcher("/end.jsp").forward(request, response);
             }
-            
-            
+
         }
     }
 
