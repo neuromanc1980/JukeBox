@@ -12,6 +12,10 @@
         <servlet-name>AllBands2</servlet-name>
         <servlet-class>servlets.AllBands2</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RankingBands</servlet-name>
+        <servlet-class>servlets.RankingBands</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InsertBand</servlet-name>
         <url-pattern>/InsertBand</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>AllBands2</servlet-name>
         <url-pattern>/AllBands2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RankingBands</servlet-name>
+        <url-pattern>/RankingBands</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

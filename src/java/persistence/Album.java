@@ -150,7 +150,7 @@ public class Album implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.Album[ albumName=" + albumName + " ]";
+        return  albumName ;
     }
     
 }

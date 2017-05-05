@@ -5,6 +5,8 @@
  */
 package beans;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -100,6 +102,14 @@ public class JukeboxBean {
       return t;
       
   }
+      public List<Song> getSongsByName(String name){
+      EntityManager em = emf.createEntityManager();
+      Query q = em.createQuery("select b from Song b where b.songName like :songName");
+      q.setParameter("songName", "%"+name+"%");
+      List<Song> t = q.getResultList();
+      return t;
+      
+  }
     
       public List<Band> getBandsByYear(int year){
         EntityManager em = emf.createEntityManager();
@@ -117,6 +127,60 @@ public class JukeboxBean {
       return t;
       
   }
+    //Método sin acabar
+    public List<Band> getBandsByRanking() {
+        EntityManager em = emf.createEntityManager();
+        
+        // select s.album.band.name, sum(s.rating) from Song s groub by s.album.band
+        
+        //query albums
+        List<Album> albums = SelectAllAlbums();
+        HashMap<Band, BigDecimal> bandas = new HashMap<Band, BigDecimal>();
+
+        for (int x = 0; x < albums.size() ; x++){
+
+            String album = albums.get(x).getAlbumName();
+            
+            int sumRating = SumByAlbum(album);
+            
+            
+            
+                     
+        }
+        
+        
+        
+        Query q = em.createNamedQuery("select b from band order ");
+        List<Band> t = q.getResultList();
+        return t;
+    }
+    
+      public List<Song> SelectAllSongs(){
+      EntityManager em = emf.createEntityManager();
+      List<Song> resultado = em.createQuery("select s from Song s order by s.songName").getResultList();
+      return resultado;
+  }
+      
+      public List<Song> SongsByAlbum(String album){
+      EntityManager em = emf.createEntityManager();
+      System.out.println("Entra en el metodo");
+      Query q = em.createQuery("select s from Song s where s.album.albumName like :album order by s.songName");
+      q.setParameter("album", album);
+      System.out.println(q);
+      List <Song> resultado = q.getResultList();
+      System.out.println("LIST=============" + resultado);
+      return resultado;
+      }
+      //Método sin acabar
+      public int SumByAlbum(String album){
+      EntityManager em = emf.createEntityManager();
+      System.out.println("Entra");
+      Query q = em.createQuery("select sum(Rating) from Song a where album like albumName");
+      q.setParameter("albumName", album);
+      int resultado = q.getFirstResult();
+      System.out.println("Resultado=====================" + resultado);
+      return resultado;
+      }
     
     
     

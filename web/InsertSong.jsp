@@ -30,7 +30,7 @@
             %>
                 </select>
                 
-            <br>Rating: <input type="number" name="rating" step="0.1" max="10" min="0" required>
+            <br>Rating: <input type="number" name="rating" step="1" max="10" min="0" required>
              <br>
             <br>Lenght: <input type="number" name="lenght" step="0.1" min="0.1" required>
              <br>

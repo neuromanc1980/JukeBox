@@ -16,14 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.Band;
+import persistence.Song;
 
 /**
  *
  * @author xaviB
  */
-@WebServlet(name = "BandByName", urlPatterns = {"/BandByName"})
-public class BandByName extends HttpServlet {
-    
+@WebServlet(name = "SongsByAlbum", urlPatterns = {"/SongsByAlbum"})
+public class SongsByAlbum extends HttpServlet {
+
     @EJB
     JukeboxBean miEjb;
 
@@ -34,13 +35,14 @@ public class BandByName extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             System.out.println("Entra1");
-            if ("Search".equals(request.getParameter("getGroupByName"))) {
+            if ("Search".equals(request.getParameter("getSongByAlbum"))) {
                 System.out.println("Entra2");
-           String name = request.getParameter("groupName");
-           List<Band> b = miEjb.getBandsByName(name);
-           request.setAttribute("bands", b);
+           String name = request.getParameter("songAlbum");
+           System.out.println("name====" + name);
+           List<Song> b = miEjb.SongsByAlbum(name);
+           request.setAttribute("songs", b);
            
-           request.getRequestDispatcher("/BandsByName.jsp").forward(request, response);   
+           request.getRequestDispatcher("/SongsByName.jsp").forward(request, response);   
             }
         }
     }

@@ -41,11 +41,11 @@ public class Song implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "Song_Name")
     private String songName;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "Rating")
-    private BigDecimal rating;
+    private int rating;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "Length")
@@ -61,7 +61,7 @@ public class Song implements Serializable {
         this.songName = songName;
     }
 
-    public Song(String songName, BigDecimal rating, BigDecimal length) {
+    public Song(String songName, int rating, BigDecimal length) {
         this.songName = songName;
         this.rating = rating;
         this.length = length;
@@ -75,11 +75,11 @@ public class Song implements Serializable {
         this.songName = songName;
     }
 
-    public BigDecimal getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(BigDecimal rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

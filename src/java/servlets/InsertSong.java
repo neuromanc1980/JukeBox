@@ -46,15 +46,11 @@ public class InsertSong extends HttpServlet {
                 System.out.println("Entra1");
                 String name = request.getParameter("name");
                 String album = request.getParameter("album");
-                double rating = Double.parseDouble(request.getParameter("rating"));
-                BigDecimal rating1 = BigDecimal.valueOf(rating);
-                System.out.println("================================");
-                System.out.println(rating1);
-                System.out.println("================================");
+                int rating = Integer.parseInt(request.getParameter("rating"));
                 double lenght = Double.parseDouble(request.getParameter("lenght"));
                 BigDecimal lenght1 = BigDecimal.valueOf(lenght);
                 System.out.println(lenght1);
-                Song b = new Song(name, rating1, lenght1);
+                Song b = new Song(name, rating, lenght1);
                 Album a = miEjb.getAlbumByName(album);
                 b.setAlbum(a);
                 

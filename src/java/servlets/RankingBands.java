@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,27 +20,33 @@ import persistence.Band;
  *
  * @author xaviB
  */
-@WebServlet(name = "BandByName", urlPatterns = {"/BandByName"})
-public class BandByName extends HttpServlet {
-    
+public class RankingBands extends HttpServlet {
+
     @EJB
     JukeboxBean miEjb;
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            
             throws ServletException, IOException {
-         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            System.out.println("Entra1");
-            if ("Search".equals(request.getParameter("getGroupByName"))) {
-                System.out.println("Entra2");
-           String name = request.getParameter("groupName");
-           List<Band> b = miEjb.getBandsByName(name);
-           request.setAttribute("bands", b);
-           
-           request.getRequestDispatcher("/BandsByName.jsp").forward(request, response);   
+                 
+            
+            if ("Search".equals(request.getParameter("getRankingBands"))){
+                
+                List<Band> b = miEjb.getBandsByRanking();
+                request.setAttribute("bands", b);
+                request.getRequestDispatcher("/BandsByYear.jsp").forward(request, response);  
+                
             }
+            
         }
     }
 

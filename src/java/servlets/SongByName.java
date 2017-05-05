@@ -16,13 +16,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.Band;
+import persistence.Song;
 
 /**
  *
  * @author xaviB
  */
-@WebServlet(name = "BandByName", urlPatterns = {"/BandByName"})
-public class BandByName extends HttpServlet {
+@WebServlet(name = "SongByName", urlPatterns = {"/SongByName"})
+public class SongByName extends HttpServlet {
     
     @EJB
     JukeboxBean miEjb;
@@ -34,13 +35,13 @@ public class BandByName extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             System.out.println("Entra1");
-            if ("Search".equals(request.getParameter("getGroupByName"))) {
+            if ("Search".equals(request.getParameter("getSongByName"))) {
                 System.out.println("Entra2");
-           String name = request.getParameter("groupName");
-           List<Band> b = miEjb.getBandsByName(name);
-           request.setAttribute("bands", b);
+           String name = request.getParameter("songName");
+           List<Song> b = miEjb.getSongsByName(name);
+           request.setAttribute("songs", b);
            
-           request.getRequestDispatcher("/BandsByName.jsp").forward(request, response);   
+           request.getRequestDispatcher("/SongsByName.jsp").forward(request, response);   
             }
         }
     }
