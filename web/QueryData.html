@@ -33,12 +33,7 @@ and open the template in the editor.
             Browse songs by album: <input type ="submit" value = "Search" name ="getSongByAlbum">
         </form>
         
-        <form action ="SongsByLength" method = "POST" name = "">
-            <input type ="number" name ="songLength1" required>
-            <input type ="number" name ="songLength2" required>
-            Browse songs by length: <input type ="submit" value = "Search" name ="getSongByLength">
-        </form>
-        
+                
         <form action ="AlbumsByYear" method = "POST" name = "">
             <input type ="number" name ="albumYear" required>
             Browse albums by year: <input type ="submit" value = "Search" name ="getAlbumByYear">
@@ -77,8 +72,12 @@ and open the template in the editor.
             Albums ranking: <input type ="submit" value = "Search" name ="getAlbumsByRanking">
         </form>
         
-        <form action ="SongsByRanking" method = "POST" name = "">
+        <form action ="RankingSongs" method = "POST" name = "">
             Songs ranking: <input type ="submit" value = "Search" name ="getSongsByRanking">
+        </form>
+        
+        <form action ="SongsByLength" method = "POST" name = "">
+            Songs by length: <input type ="submit" value = "Search" name ="getSongsByLength">
         </form>
         
     </body>

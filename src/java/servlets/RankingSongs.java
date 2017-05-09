@@ -8,14 +8,12 @@ package servlets;
 import beans.JukeboxBean;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistence.Album;
 import persistence.Band;
 import persistence.Song;
 
@@ -23,9 +21,10 @@ import persistence.Song;
  *
  * @author xaviB
  */
-@WebServlet(name = "InsertSong", urlPatterns = {"/InsertSong"})
-public class InsertSong extends HttpServlet {
+public class RankingSongs extends HttpServlet {
 
+    @EJB
+    JukeboxBean miEjb;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,29 +34,20 @@ public class InsertSong extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @EJB
-    JukeboxBean miEjb;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           // Miramos si han pulsado el submit
-            if ("alta".equals(request.getParameter("alta"))) {
-                System.out.println("Entra1");
-                String name = request.getParameter("name");
-                String album = request.getParameter("album");
-                int rating = Integer.parseInt(request.getParameter("rating"));
-                double length = Double.parseDouble(request.getParameter("lenght"));           
-                Song b = new Song(name, rating, length);
-                Album a = miEjb.getAlbumByName(album);
-                b.setAlbum(a);
+                 
+            
+            if ("Search".equals(request.getParameter("getSongsByRanking"))){
                 
-                if (miEjb.insertSong(b)){
-                    request.setAttribute("status", "Song created succesfully");
-                    
-                }   else { request.setAttribute("status", "Error in song creation");}
-                request.getRequestDispatcher("/end.jsp").forward(request, response);  
-            } 
+                List<Song> b = miEjb.getSongsByRanking();
+                request.setAttribute("songs", b);
+                request.getRequestDispatcher("/SongsByName.jsp").forward(request, response);  
+                
+            }
+            
         }
     }
 

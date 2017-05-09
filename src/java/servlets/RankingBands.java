@@ -41,8 +41,8 @@ public class RankingBands extends HttpServlet {
             
             if ("Search".equals(request.getParameter("getRankingBands"))){
                 
-                List<Band> b = miEjb.getBandsByRanking();
-                request.setAttribute("bands", b);
+               // List<Band> b = miEjb.getBandsByRanking();
+               // request.setAttribute("bands", b);
                 request.getRequestDispatcher("/BandsByYear.jsp").forward(request, response);  
                 
             }

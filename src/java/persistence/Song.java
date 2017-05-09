@@ -6,7 +6,6 @@
 package persistence;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,11 +44,10 @@ public class Song implements Serializable {
     @NotNull
     @Column(name = "Rating")
     private int rating;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "Length")
-    private BigDecimal length;
+    private double length;
     @JoinColumn(name = "Album", referencedColumnName = "Album_Name")
     @ManyToOne(optional = false)
     private Album album;
@@ -61,7 +59,7 @@ public class Song implements Serializable {
         this.songName = songName;
     }
 
-    public Song(String songName, int rating, BigDecimal length) {
+    public Song(String songName, int rating, double length) {
         this.songName = songName;
         this.rating = rating;
         this.length = length;
@@ -83,11 +81,11 @@ public class Song implements Serializable {
         this.rating = rating;
     }
 
-    public BigDecimal getLength() {
+    public double getLength() {
         return length;
     }
 
-    public void setLength(BigDecimal length) {
+    public void setLength(double length) {
         this.length = length;
     }
 

@@ -16,6 +16,18 @@
         <servlet-name>RankingBands</servlet-name>
         <servlet-class>servlets.RankingBands</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SongsByLength</servlet-name>
+        <servlet-class>servlets.SongsByLength</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RankingSongs</servlet-name>
+        <servlet-class>servlets.RankingSongs</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RankingAlbums</servlet-name>
+        <servlet-class>servlets.RankingAlbums</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InsertBand</servlet-name>
         <url-pattern>/InsertBand</url-pattern>
@@ -31,6 +43,18 @@
     <servlet-mapping>
         <servlet-name>RankingBands</servlet-name>
         <url-pattern>/RankingBands</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SongsByLength</servlet-name>
+        <url-pattern>/SongsByLength</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RankingSongs</servlet-name>
+        <url-pattern>/RankingSongs</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RankingAlbums</servlet-name>
+        <url-pattern>/RankingAlbums</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
