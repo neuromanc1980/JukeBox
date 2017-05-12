@@ -14,7 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import persistence.AlbumDTO;
 import persistence.Band;
+import persistence.BandDTO;
 
 /**
  *
@@ -40,10 +42,11 @@ public class RankingBands extends HttpServlet {
                  
             
             if ("Search".equals(request.getParameter("getRankingBands"))){
-                
-               // List<Band> b = miEjb.getBandsByRanking();
-               // request.setAttribute("bands", b);
-                request.getRequestDispatcher("/BandsByYear.jsp").forward(request, response);  
+                //hay que hacer las queries de albums   <=====
+                List<BandDTO> b = miEjb.getBandByRanking();
+                System.out.println("entra2a");
+                request.setAttribute("bands", b);
+                request.getRequestDispatcher("/BandsRanking.jsp").forward(request, response);  
                 
             }
             

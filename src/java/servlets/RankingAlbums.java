@@ -14,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import persistence.Album;
+import persistence.AlbumDTO;
 import persistence.Band;
 import persistence.Song;
 
@@ -39,12 +41,14 @@ public class RankingAlbums extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
                  
+            System.out.println("entra1a");
             
-            if ("Search".equals(request.getParameter("getAlbumsByRanking"))){
+            if ("Search".equals(request.getParameter("getAlbumByRanking"))){
                 //hay que hacer las queries de albums   <=====
-                //List<Album> b = miEjb.getAlbumsByRanking();
-                //request.setAttribute("albums", b);
-                request.getRequestDispatcher("/SongsByName.jsp").forward(request, response);  
+                List<AlbumDTO> b = miEjb.getAlbumByRanking();
+                System.out.println("entra2a");
+                request.setAttribute("albums", b);
+                request.getRequestDispatcher("/AlbumsByName.jsp").forward(request, response);  
                 
             }
             

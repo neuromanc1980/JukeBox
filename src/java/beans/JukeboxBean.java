@@ -6,6 +6,7 @@
 package beans;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -14,7 +15,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import persistence.Album;
+import persistence.AlbumDTO;
 import persistence.Band;
+import persistence.BandDTO;
 import persistence.Musician;
 import persistence.Song;
 
@@ -137,12 +140,48 @@ public class JukeboxBean {
         return t;
     }
     
-     public List<Song> getAlbumByRanking() {
-        EntityManager em = emf.createEntityManager();        
+     public List<AlbumDTO> getAlbumByRanking() {
+        EntityManager em = emf.createEntityManager(); 
+        System.out.println("--1--");
+        List<AlbumDTO> lista = new ArrayList();
         // select s.album.band.name, sum(s.rating) from Song s groub by s.album.band
-        Query q = em.createQuery("select s.album.name from Song s group by s.album.name order by s.album.rating desc");
-        List<Song> t = q.getResultList();
-        return t;
+        Query q = em.createQuery("select s.album, avg(s.rating) from Song s group by s.album.albumName order by sum(s.rating) desc");
+        List<Object[]> t = q.getResultList();
+        System.out.println("--2--");
+        for (Object[] o : t) {  //por cada resultado en la lista creamos un array de objeto
+            System.out.println("--3--");
+            AlbumDTO album = new AlbumDTO();
+            System.out.println("--4--");
+            Album a = (Album) o[0];
+            album.setAlbum(a);   
+            double sum = (double) o[1];
+            album.setSuma(sum);
+            lista.add(album);
+        }
+         System.out.println("--5--");
+        return lista;
+    }
+     
+     public List<BandDTO> getBandByRanking() {
+        EntityManager em = emf.createEntityManager(); 
+        System.out.println("--1--");
+        List<BandDTO> lista = new ArrayList();
+        // select s.album.band.name, sum(s.rating) from Song s groub by s.album.band
+        Query q = em.createQuery("select s.album.band, avg(s.rating) from Song s group by s.album.band.bandName order by sum(s.rating) desc");
+        List<Object[]> t = q.getResultList();
+        System.out.println("--2--");
+        for (Object[] o : t) {  //por cada resultado en la lista creamos un array de objeto
+            System.out.println("--3--");
+            BandDTO band = new BandDTO();
+            System.out.println("--4--");
+            Band b = (Band) o[0];
+            band.setBand(b);   
+            double sum = (double) o[1];
+            band.setSuma(sum);
+            lista.add(band);
+        }
+         System.out.println("--5--");
+        return lista;
     }
     
       public List<Song> SelectAllSongs(){
