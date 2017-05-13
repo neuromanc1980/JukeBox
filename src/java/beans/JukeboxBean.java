@@ -27,121 +27,159 @@ import persistence.Song;
  */
 @Stateless
 public class JukeboxBean {
-    
-    @PersistenceUnit EntityManagerFactory emf;
-    
-    public boolean insertBand(Band p){
+
+    @PersistenceUnit
+    EntityManagerFactory emf;
+
+    public boolean insertBand(Band p) {
         EntityManager em = emf.createEntityManager();
         Band band = em.find(Band.class, p.getBandName());
-        if (band == null ){
+        if (band == null) {
             em.persist(p);
             em.flush();
             em.close();
             return true;
+        } else {
+            return false;
         }
-        else return false;
     }
-    public boolean insertSong(Song p){
+
+    public boolean insertSong(Song p) {
         EntityManager em = emf.createEntityManager();
-        System.out.println("SONG======> "+p);
+        System.out.println("SONG======> " + p);
         Song song = em.find(Song.class, p.getSongName());
-        if (song == null ){
+        if (song == null) {
             em.persist(p);
             em.flush();
             em.close();
             return true;
+        } else {
+            return false;
         }
-        else return false;
     }
-    public List<Band> SelectAllBands(){
-      EntityManager em = emf.createEntityManager();
-      List<Band> resultado = em.createNamedQuery("Band.findAll").getResultList();
-      return resultado;
-  }
-    public List<Album> SelectAllAlbums(){
-      EntityManager em = emf.createEntityManager();
-      List<Album> resultado = em.createQuery("select a from Album a order by a.band.bandName").getResultList();
-      return resultado;
-  }
-    public String insertAlbum(Album p, String b){
+
+    public List<Band> SelectAllBands() {
+        EntityManager em = emf.createEntityManager();
+        List<Band> resultado = em.createNamedQuery("Band.findAll").getResultList();
+        return resultado;
+    }
+
+    public List<Album> SelectAllAlbums() {
+        EntityManager em = emf.createEntityManager();
+        List<Album> resultado = em.createQuery("select a from Album a order by a.band.bandName").getResultList();
+        return resultado;
+    }
+
+    public String insertAlbum(Album p, String b) {
         System.out.println("Enta1");
         EntityManager em = emf.createEntityManager();
         Album album = em.find(Album.class, p.getAlbumName());
-        if (album == null ){
+        if (album == null) {
             System.out.println("Enta2");
             em.persist(p);
             em.flush();
             em.close();
             return "ok";
+        } else {
+            return "Album already exists";
         }
-        else return "Album already exists";
     }
-    public String insertMusician(Musician p, String b){
+
+    public String insertMusician(Musician p, String b) {
         System.out.println("Enta1");
         EntityManager em = emf.createEntityManager();
         Musician m = em.find(Musician.class, p.getMusicianName());
-        if (m == null ){
+        if (m == null) {
             System.out.println("Enta2");
             em.persist(p);
             em.flush();
             em.close();
             return "ok";
+        } else {
+            return "Musician already exists";
         }
-        else return "Musician already exists";
     }
-    
-    public Band getBandByName(String name){
-      EntityManager em = emf.createEntityManager();
-      Query q = em.createNamedQuery("Band.findByBandName");
-      q.setParameter("bandName", name);
-      Band t = (Band) q.getSingleResult();    
-      return t;      
-  }
-    
-      public List<Band> getBandsByName(String name){
-      EntityManager em = emf.createEntityManager();
-      Query q = em.createQuery("select b from Band b where b.bandName like :bandName");
-      q.setParameter("bandName", "%"+name+"%");
-      List<Band> t = q.getResultList();
-      return t;
-      
-  }
-      public List<Song> getSongsByName(String name){
-      EntityManager em = emf.createEntityManager();
-      Query q = em.createQuery("select b from Song b where b.songName like :songName");
-      q.setParameter("songName", "%"+name+"%");
-      List<Song> t = q.getResultList();
-      return t;
-      
-  }
-    
-      public List<Band> getBandsByYear(int year){
+
+    public Band getBandByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("Band.findByBandName");
+        q.setParameter("bandName", name);
+        Band t = (Band) q.getSingleResult();
+        return t;
+    }
+
+    public List<Band> getBandsByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createQuery("select b from Band b where b.bandName like :bandName");
+        q.setParameter("bandName", "%" + name + "%");
+        List<Band> t = q.getResultList();
+        return t;
+
+    }
+
+    public List<Song> getSongsByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createQuery("select b from Song b where b.songName like :songName");
+        q.setParameter("songName", "%" + name + "%");
+        List<Song> t = q.getResultList();
+        return t;
+
+    }
+
+    public List<Album> getAlbumsByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createQuery("select a from Album a where a.albumName like :albumName");
+        q.setParameter("albumName", "%" + name + "%");
+        List<Album> t = q.getResultList();
+        return t;
+
+    }
+
+    public List<Album> getAlbumsByBand(String name) {
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createQuery("select a from Album a where a.band.bandName like :band order by a.year");
+        q.setParameter("band", name);
+        List<Album> t = q.getResultList();
+        System.out.println("LISTA======" + t);
+        return t;
+
+    }
+
+    public List<Band> getBandsByYear(int year) {
         EntityManager em = emf.createEntityManager();
         Query q = em.createQuery("select b from Band b where b.year like :year");
         q.setParameter("year", year);
         List<Band> t = q.getResultList();
         return t;
-      }
-      
-    public Album getAlbumByName(String name){
-      EntityManager em = emf.createEntityManager();
-      Query q = em.createNamedQuery("Album.findByAlbumName");
-      q.setParameter("albumName", name);
-      Album t = (Album) q.getSingleResult();    
-      return t;
-      
-  }
-    
+    }
+
+    public List<Album> getAlbumByYear(int year) {
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createQuery("select a from Album a where a.year like :year");
+        q.setParameter("year", year);
+        List<Album> t = q.getResultList();
+        return t;
+    }
+
+    public Album getAlbumByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("Album.findByAlbumName");
+        q.setParameter("albumName", name);
+        Album t = (Album) q.getSingleResult();
+        return t;
+
+    }
+
     public List<Song> getSongsByRanking() {
-        EntityManager em = emf.createEntityManager();        
+        EntityManager em = emf.createEntityManager();
         // select s.album.band.name, sum(s.rating) from Song s groub by s.album.band
         Query q = em.createQuery("select s from Song s order by s.rating desc");
         List<Song> t = q.getResultList();
         return t;
     }
-    
-     public List<AlbumDTO> getAlbumByRanking() {
-        EntityManager em = emf.createEntityManager(); 
+
+    public List<AlbumDTO> getAlbumByRanking() {
+        EntityManager em = emf.createEntityManager();
         System.out.println("--1--");
         List<AlbumDTO> lista = new ArrayList();
         // select s.album.band.name, sum(s.rating) from Song s groub by s.album.band
@@ -153,17 +191,17 @@ public class JukeboxBean {
             AlbumDTO album = new AlbumDTO();
             System.out.println("--4--");
             Album a = (Album) o[0];
-            album.setAlbum(a);   
+            album.setAlbum(a);
             double sum = (double) o[1];
             album.setSuma(sum);
             lista.add(album);
         }
-         System.out.println("--5--");
+        System.out.println("--5--");
         return lista;
     }
-     
-     public List<BandDTO> getBandByRanking() {
-        EntityManager em = emf.createEntityManager(); 
+
+    public List<BandDTO> getBandByRanking() {
+        EntityManager em = emf.createEntityManager();
         System.out.println("--1--");
         List<BandDTO> lista = new ArrayList();
         // select s.album.band.name, sum(s.rating) from Song s groub by s.album.band
@@ -175,55 +213,53 @@ public class JukeboxBean {
             BandDTO band = new BandDTO();
             System.out.println("--4--");
             Band b = (Band) o[0];
-            band.setBand(b);   
+            band.setBand(b);
             double sum = (double) o[1];
             band.setSuma(sum);
             lista.add(band);
         }
-         System.out.println("--5--");
+        System.out.println("--5--");
         return lista;
     }
-    
-      public List<Song> SelectAllSongs(){
-      EntityManager em = emf.createEntityManager();
-      List<Song> resultado = em.createQuery("select s from Song s order by s.songName").getResultList();
-      return resultado;
-  }
-      
-      public List<Song> SongsByAlbum(String album){
-      EntityManager em = emf.createEntityManager();
-      System.out.println("Entra en el metodo");
-      Query q = em.createQuery("select s from Song s where s.album.albumName like :album order by s.songName");
-      q.setParameter("album", album);
-      System.out.println(q);
-      List <Song> resultado = q.getResultList();
-      System.out.println("LIST=============" + resultado);
-      return resultado;
-      }
-      //Método sin acabar
-      public int SumByAlbum(String album){
-      EntityManager em = emf.createEntityManager();
-      System.out.println("Entra");
-      Query q = em.createQuery("select sum(Rating) from Song a where album like albumName");
-      q.setParameter("albumName", album);
-      int resultado = q.getFirstResult();
-      System.out.println("Resultado=====================" + resultado);
-      return resultado;
-      }
-      
-      public List<Song> getSongsByLength(){
-      EntityManager em = emf.createEntityManager();
-      System.out.println("Entra en el metodo");
-      Query q = em.createQuery("select s from Song s order by s.length desc");
-      //q.setParameter("length", length);
-      System.out.println(q);
-      List <Song> resultado = q.getResultList();
-      System.out.println("LIST=============" + resultado);
-      return resultado;  
-          
-      }
-    
-    
-    
-    
+
+    public List<Song> SelectAllSongs() {
+        EntityManager em = emf.createEntityManager();
+        List<Song> resultado = em.createQuery("select s from Song s order by s.songName").getResultList();
+        return resultado;
+    }
+
+    public List<Song> SongsByAlbum(String album) {
+        EntityManager em = emf.createEntityManager();
+        System.out.println("Entra en el metodo");
+        Query q = em.createQuery("select s from Song s where s.album.albumName like :album order by s.songName");
+        q.setParameter("album", album);
+        System.out.println(q);
+        List<Song> resultado = q.getResultList();
+        System.out.println("LIST=============" + resultado);
+        return resultado;
+    }
+    //Método sin acabar
+
+    public int SumByAlbum(String album) {
+        EntityManager em = emf.createEntityManager();
+        System.out.println("Entra");
+        Query q = em.createQuery("select sum(Rating) from Song a where album like albumName");
+        q.setParameter("albumName", album);
+        int resultado = q.getFirstResult();
+        System.out.println("Resultado=====================" + resultado);
+        return resultado;
+    }
+
+    public List<Song> getSongsByLength() {
+        EntityManager em = emf.createEntityManager();
+        System.out.println("Entra en el metodo");
+        Query q = em.createQuery("select s from Song s order by s.length desc");
+        //q.setParameter("length", length);
+        System.out.println(q);
+        List<Song> resultado = q.getResultList();
+        System.out.println("LIST=============" + resultado);
+        return resultado;
+
+    }
+
 }
